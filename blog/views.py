@@ -1,9 +1,15 @@
+from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
 from .models import Post
 
 
 def post_list(request):
-    posts = Post.published.all()
+    post_list = Post.published.all()
+    # Pagination with 5 post per page
+    paginator = Paginator(post_list, 5)
+    page_number = request.GET.get('page', 1)
+    posts = paginator.page(page_number)
+
     return render(
         request,
         'blog/post/list.html',
