@@ -16,6 +16,7 @@ class DraftedManager(models.Manager):
             super().get_queryset().filter(status=Post.Status.DRAFT)
         )
 
+
 class Post(models.Model):
     class Status(models.TextChoices):
         DRAFT = 'DF', 'Draft'
