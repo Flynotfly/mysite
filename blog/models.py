@@ -60,9 +60,7 @@ class Post(models.Model):
         return reverse(
             'blog:post_detail',
             args=[
-                self.publish.year,
-                self.publish.month,
-                self.publish.day,
+                self.id,
                 self.slug,
             ]
         )
