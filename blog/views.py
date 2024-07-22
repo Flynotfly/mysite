@@ -41,10 +41,18 @@ def post_detail(request, id, post):
         slug=post,
         status=Post.Status.PUBLISHED,
     )
+
+    comments = post.comments.filter(active=True)
+    form_for_new_comment = CommentForm()
+
     return render(
         request,
         'blog/post/detail.html',
-        {'post': post}
+        {
+            'post': post,
+            'comments': comments,
+            'form': form_for_new_comment,
+        }
     )
 
 
