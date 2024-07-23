@@ -10,6 +10,11 @@
                 {{ post.title }}
             </a>
         </h2>
+        {% with post.tags.all as post_tags %}
+            {% if post_tags %}
+            <p class="tags">Tags: {{ post_tags|join:', ' }}</p>
+            {% endif %}
+        {% endwith %}
         <p class="date">
             Published {{ post.publish }} by {{ post.author }}
         </p>
