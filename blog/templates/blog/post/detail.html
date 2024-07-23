@@ -4,6 +4,7 @@
 
 {% block content %}
     <h1>{{ post.title }}</h1>
+    {% include 'blog/post/includes/tags.html' %}
     <p class="date">
         Published {{ post.publish }} by {{ post.author }}
     </p>
