@@ -8,24 +8,7 @@
         <h2>Posts tagged with "{{ tag.name }}"</h2>
     {% endif %}
     {% for post in posts %}
-        <h2>
-            <a href="{{ post.get_absolute_url }}">
-                {{ post.title }}
-            </a>
-        </h2>
-        {% with post.tags.all as post_tags %}
-            {% if post_tags %}
-                Tags:
-                {% for tag in post_tags %}
-                    <a href="{%url 'blog:post_list_by_tag' tag.slug %}">{{ tag.name }}</a>
-                    {% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        <p class="date">
-            Published {{ post.publish }} by {{ post.author }}
-        </p>
-        {{ post.body|truncatewords:30|linebreaks }}
+        {% include 'blog/post/includes/post_preview.html' %}
     {% endfor %}
     {% include 'pagination.html' with page=posts %}
 {% endblock %}
