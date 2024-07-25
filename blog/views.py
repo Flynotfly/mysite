@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
-from django.contrib.postgres.search import SearchVector
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.db.models import Count
 from django.shortcuts import get_object_or_404, render
 # from django.views.generic import ListView
@@ -155,10 +155,14 @@ def post_search(request):
         form = SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data['query']
+            search_vector = SearchVector('title', weight='A') + SearchVector('body', weight='B')
+            search_query = SearchQuery(query)
+            search_rank = SearchRank(search_vector, search_query)
             results = (
                 Post.published.annotate(
-                    search=SearchVector('title', 'body')
-                ).filter(search=query)
+                    search=search_vector,
+                    rank=search_rank,
+                ).filter(rank__gte=0.3).order_by('-rank')
             )
 
     return render(
