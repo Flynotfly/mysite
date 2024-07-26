@@ -1,0 +1,5 @@
+<p>Search for posts</p>
+<form method="get" action="{% url 'blog:post_search' %}">
+    {{ form.as_p }}
+    <input type="submit" value="Search">
+</form>

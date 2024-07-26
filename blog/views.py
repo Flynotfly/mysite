@@ -41,6 +41,7 @@ def post_list(request, tag_slug=None):
         {
             'posts': posts,
             'tag': tag,
+            'search_form': SearchForm,
         }
     )
 
